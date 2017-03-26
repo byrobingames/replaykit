@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<palette>
+    
+    <block tag="replaykit-init-recording" spec="Initialize ReplayKit with 'Ask for Preview': %0 [c:replaykit]" code="ReplayKit.init(~);" help="Use this block once in your first (loading)scene, before calling the other blocks. You can set ask for preview, the user get an pop-up to watch the video or not" type="action" color="charcoal" returns="void">
+        <fields>
+            <dropdown order="0">
+                <choices>
+                    <c text="Yes" code="true"></c>
+                    <c text="No" code="false"></c>
+                </choices>
+            </dropdown>
+        </fields>
+    </block>
+    
+    <block tag="replaykit-recording-available" spec="replaykit available [c:replaykit]" code="ReplayKit.isRecordingAvailable()" help="Check if ReplayKit is available (running iOS9 =>) If its running iOS9 => on device with A8 chip then initialize ReplayKit" type="normal" color="charcoal" returns="boolean">
+        <fields>
+        </fields>
+    </block>
+    
+    <block tag="replaykit-start-recording" spec="Start Recording [c:replaykit]" code="ReplayKit.startRecording();" type="action" color="charcoal" returns="void">
+        <fields>
+        </fields>
+    </block>
+    
+    <block tag="replaykit-stop-recording" spec="Stop Recording [c:replaykit]" code="ReplayKit.stopRecording();" type="action" color="charcoal" returns="void">
+        <fields>
+        </fields>
+    </block>
+    
+    <block tag="replaykit-is-recording" spec="is recording [c:replaykit]" code="ReplayKit.isRecording()" type="normal" color="charcoal" returns="boolean">
+        <fields>
+        </fields>
+    </block>
+    
+    <block tag="replaykit-is-cancelled" spec="recording is cancelled [c:replaykit]" code="ReplayKit.isCancelled()" type="normal" color="charcoal" returns="boolean">
+        <fields>
+        </fields>
+    </block>
+    
+    <block tag="replaykit-previewcontroller" spec="previewController %0 [c:replaykit]" code="ReplayKit.~()" type="normal" color="charcoal" returns="boolean">
+        <fields>
+            <dropdown order="0">
+                <choices>
+                    <c text="did opened" code="previewDidOpened"></c>
+                    <c text="did closed" code="previewDidClosed"></c>
+                </choices>
+            </dropdown>
+        </fields>
+    </block>
+    
+    <!--<block tag="replaykit-discard-recording" spec="Discard Recording [c:replaykit]" code="ReplayKit.discardRecording();" type="action" color="charcoal" returns="void">
+        <fields>
+        </fields>
+    </block>-->
+
+</palette>

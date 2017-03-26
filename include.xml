@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension>
+    
+    <section if="ios">
+        
+        <ndll name="replaykitex" if="ios"/>
+    
+        <dependency name="UIKit.framework" if="ios" />
+        <dependency name="ReplayKit.framework" if="ios" />
+        <dependency name="QuartzCore.framework" if="ios" />
+        <dependency name="OpenGLES.framework" if="ios" />
+    
+        <ios linker-flags="-weak_framework ReplayKit" />
+    
+    </section>
+    
+    <section if="android">
+        <classpath name="src" />
+        
+        <dependency name="screencapture" path="dependencies/screencapture" if="android" />
+        
+        <android extension="com.byrobin.screencapture.ScreenCaptureEX" />
+    </section>
+
+</extension>

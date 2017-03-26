@@ -1,0 +1,6 @@
+name=Replaykit iOS9 and Android 5 v0.0.6 (byRobin)
+description=ReplayKit iOS 9> and Android Lollipop API 21>.
+author=Robin Schaafsma
+website=http://www.byrobingames.com
+version=0.0.6
+compatibility=mobile

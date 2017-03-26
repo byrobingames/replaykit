@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <FrameLayout
+        android:id="@+id/videoPlaceholder"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@android:color/background_dark">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/share"
+                android:id="@+id/share"
+                android:onClick="onSharePressed"
+                android:layout_gravity="right|top" />
+
+        <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:id="@+id/cancel"
+                android:onClick="onCancelPressed" />
+
+    </FrameLayout>
+
+</FrameLayout>
