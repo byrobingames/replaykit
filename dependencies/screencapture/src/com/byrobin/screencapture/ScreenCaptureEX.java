@@ -36,6 +36,11 @@ import java.io.IOException;
 import org.haxe.extension.Extension;
 import org.haxe.lime.HaxeObject;
 
+///permisions
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.Manifest;
+
 
 public class ScreenCaptureEX extends Extension {
 
@@ -75,6 +80,15 @@ public class ScreenCaptureEX extends Extension {
     protected static HaxeObject screenCaptureCallback;
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
+    private static final int REQUEST_ALL = 100;
+    private static String[] PERMISSIONS_ALL = {Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO};
+    
+    private static final int REQUEST_RECORD_AUDIO = 101;
+    private static String[] PERMISSIONS_RECORD_AUDIO = {Manifest.permission.RECORD_AUDIO};
+    
+    private static final int REQUEST_WRITE_EXTERNAL = 102;
+    private static String[] PERMISSIONS_WRITE_EXTERNAL = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
@@ -151,7 +165,9 @@ public class ScreenCaptureEX extends Extension {
     @Override
     public void onPause() {
         super.onPause();
-        stopScreenCapture();
+        if (mMediaRecorder != null) {
+            stopScreenCapture();
+        }
     }
     
     @Override
@@ -172,6 +188,11 @@ public class ScreenCaptureEX extends Extension {
     }
     
     public static void startScreenCapture() {
+        
+        if(!hasPermissions(PERMISSIONS_WRITE_EXTERNAL)){
+            ActivityCompat.requestPermissions(mainActivity, PERMISSIONS_ALL, REQUEST_ALL);
+            return;
+        }
             
         Extension.mainActivity.runOnUiThread
             (
@@ -204,6 +225,8 @@ public class ScreenCaptureEX extends Extension {
     
     private void setUpVirtualDisplay() {
         
+        Log.i(TAG, "setUpVirtualDisplay");
+        
         mVirtualDisplay = mMediaProjection.createVirtualDisplay("ScreenCapture",
                                                                 DISPLAY_WIDTH, DISPLAY_HEIGHT, mScreenDensity,
                                                                 DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
@@ -211,6 +234,7 @@ public class ScreenCaptureEX extends Extension {
                                                                 /*Handler*/);
         
         mMediaRecorder.start();
+        Log.i(TAG, "mMediaRecorder.start");
     }
     
     public static void stopScreenCapture() {
@@ -270,25 +294,37 @@ public class ScreenCaptureEX extends Extension {
     }
     
     private void initRecorder() {
+        
+            
         try {
-			String appName = "::APP_TITLE::";
-			String appNameFinal = appName.replace(' ','_');
+            Log.i(TAG, "start initRecorder");
+            String appName = "::APP_TITLE::";
+            String appNameFinal = appName.replace(' ','_');
             mMediaRecorder = new MediaRecorder();
-            mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            
+            if(hasPermissions(PERMISSIONS_RECORD_AUDIO)){
+                mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            }
+            
+            //mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
             mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mMediaRecorder.setOutputFile(Environment
-                                         .getExternalStoragePublicDirectory(Environment
+                                            .getExternalStoragePublicDirectory(Environment
                                                                             .DIRECTORY_MOVIES) + "/" + appNameFinal + ".mp4");
             mMediaRecorder.setVideoSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);
             mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            if(hasPermissions(PERMISSIONS_RECORD_AUDIO)){
+                mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            }
+            //mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             mMediaRecorder.setVideoEncodingBitRate(512 * 1000);
             mMediaRecorder.setVideoFrameRate(30);
             mMediaRecorder.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.i(TAG, "IOException: " + e);
+            }
     }
     
     public void openPreview() {
@@ -316,5 +352,16 @@ public class ScreenCaptureEX extends Extension {
         
     //    return _isCancelled;
     //}
-
+    
+    public static boolean hasPermissions(String... permissions) {
+        if (android.os.Build.VERSION.SDK_INT >= 23 && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(mainActivity, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
 }
