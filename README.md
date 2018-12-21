@@ -4,9 +4,9 @@ For Stencyl 3.4 and above
 
 Stencyl extension for “ReplayKit” for iOS . This extension allows you to easily integrate ReplayKit on your Stencyl game / application. (http://www.stencyl.com)
 
-<span style="color:red;">ReplayKit is only available on the following devices running iOS 9 or above; iPad Air 2, iPad Mini 2, iPad Mini 3, iPad 5 Air, iPhone 5s, iPhone 6 and iPhone 6 Plus.
+<span style="color:red;">ReplayKit is only available on the following devices running iOS 9 or above; iPad Air 2, iPad Mini 2, iPad Mini 3, iPad 5 Air, iPhone 5s, iPhone 6 and iPhone 6 Plus.</span>
 
-On Android  is ReplayKit only available on devices running Android 5.0 (Lollipop) or above.<br/>
+<span style="color:red;">On Android  is ReplayKit only available on devices running Android 5.0 (Lollipop) or above.<br/>
 For Android make sure you selected API 21 or higher in Mobile settings->version->Android Target version</span>
 
 ### Important!!
